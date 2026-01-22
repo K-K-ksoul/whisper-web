@@ -30,7 +30,7 @@ async function send() {
   const formData = new FormData();
   formData.append("audio", file);
 
-  const res = await fetch("https://YOUR_API_URL/transcribe", {
+  const res = await fetch("https://whisper-api.onrender.com", {
     method: "POST",
     body: formData
   });
