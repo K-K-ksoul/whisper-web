@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Whisper 音声文字起こし</title>
+</head>
+<body>
+
+<h2>音声文字起こし</h2>
+
+<input type="file" id="audio" accept=".wav,.m4a">
+<br><br>
+
+<button onclick="send()">文字起こし開始</button>
+<p id="status"></p>
+
+<textarea id="result" rows="20" cols="80"></textarea>
+
+<script>
+async function send() {
+  const file = document.getElementById("audio").files[0];
+  if (!file) {
+    alert("音声ファイルを選択してください");
+    return;
+  }
+
+  document.getElementById("status").textContent = "処理中...";
+  document.getElementById("result").value = "";
+
+  const formData = new FormData();
+  formData.append("audio", file);
+
+  const res = await fetch("https://YOUR_API_URL/transcribe", {
+    method: "POST",
+    body: formData
+  });
+
+  const data = await res.json();
+  document.getElementById("result").value = data.text;
+  document.getElementById("status").textContent = "完了";
+}
+</script>
+
+</body>
+</html>
